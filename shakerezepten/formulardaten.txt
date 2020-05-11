@@ -1,0 +1,1 @@
+a:5:{s:8:"absender";s:1:"a";s:10:"empfaenger";s:1:"b";s:5:"boxnr";s:1:"2";s:15:"paket_versenden";s:15:"Paket versenden";s:6:"status";s:8:"erledigt";}

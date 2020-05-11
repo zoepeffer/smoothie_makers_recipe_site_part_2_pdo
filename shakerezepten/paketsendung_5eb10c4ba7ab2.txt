@@ -1,0 +1,1 @@
+a:4:{s:8:"absender";s:1:"c";s:10:"empfaenger";s:1:"d";s:5:"boxnr";s:1:"1";s:15:"paket_versenden";s:15:"Paket versenden";}
