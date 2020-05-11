@@ -1,4 +1,16 @@
 <?php
+
+namespace seitensteuerung;
+
+use Klassen\PDO\Datenbank;  // benutze diesen Namespace für Datenbank
+#use Klassen\MYSQLI\Datenbank; // benutze diesen Namespace für Datenbank
+
+// benutzte den Namensraum nur für die spezielle Klasse
+
+
+use Klassen\Datei;
+use Klassen\Dateimanager;
+
 class Seitensteuerung
 {
 	// Attribute
