@@ -1,5 +1,5 @@
 <?php
-$verzeichnis = "paketsendungen";
+$verzeichnis = "shakerezepten";
 $content = "";
 
 // Prüfung ob Verzeichnis existiert

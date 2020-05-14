@@ -1,8 +1,9 @@
 <?php
-class Rezepte
+namespace Klassen;
+class Rezept
 {
 	// Attribute
-	protected $RezepteID;
+	protected $RezeptID;
 	protected $RezensionID;
 	protected $UserID;
 	protected $FarbeID;
@@ -12,16 +13,17 @@ class Rezepte
 	protected $BearbeitungID;
 	protected $RezepteName;
 	protected $Datum;
+	protected $Zutatenlist;	
 	protected $Rezept_Beschreiben;
 	protected $Rezeptbild;
 	// GET- und SET-Methoden
-	protected function getRezepteID()
+	protected function getRezeptID()
 	{
-		return $this->RezepteID;
+		return $this->RezeptID;
 	}
-	protected function setRezepteID($RezepteID)
+	protected function setRezeptID($RezeptID)
 	{
-		$this->RezepteID = $RezepteID;
+		$this->RezeptID = $RezeptID;
 	}
 	protected function getRezensionID()
 	{
@@ -95,6 +97,14 @@ class Rezepte
 	{
 		$this->Datum = $Datum;
 	}
+	protected function getZutatenlist()
+	{
+		return $this->Zutatenlist;
+	}
+	protected function setZutatenlist($Zutatenlist)
+	{
+		$this->Zutatenlist = $Zutatenlist;
+	}	
 	protected function getRezept_Beschreiben()
 	{
 		return $this->Rezept_Beschreiben;

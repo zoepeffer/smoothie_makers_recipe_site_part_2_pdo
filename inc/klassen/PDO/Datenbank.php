@@ -104,3 +104,4 @@ class Datenbank
 
 #echo "<hr />";
 #echo $db->sql_delete("delete from mitarbeiter");
+?>

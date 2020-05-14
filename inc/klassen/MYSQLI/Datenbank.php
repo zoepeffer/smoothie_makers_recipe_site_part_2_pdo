@@ -10,12 +10,13 @@ class Datenbank
 	public $kennwort="";
 	public $db_verbindung;	// MYSQLI Verbindung	
 	
+	
 	################################################################################################
 	// Magische Methoden
 	public function __construct()
 	{
 		$this->verbindung_herstellen();
-		echo "<h1>MYSQLI</h1>";
+		#echo "<h1>MYSQLI</h1>";
 	}
 	################################################################################################
 	// Methoden

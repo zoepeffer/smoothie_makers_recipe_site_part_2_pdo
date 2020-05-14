@@ -1,12 +1,18 @@
 <?php
-
 namespace seitensteuerung;
 
 use Klassen\PDO\Datenbank;  // benutze diesen Namespace für Datenbank
 #use Klassen\MYSQLI\Datenbank; // benutze diesen Namespace für Datenbank
 
 // benutzte den Namensraum nur für die spezielle Klasse
-
+use Klassen\Bearbeitung;
+use Klassen\Farbe;
+use Klassen\Geschmack;
+use Klassen\Rezension;
+use Klassen\Rezept;
+use Klassen\Selection;
+use Klassen\User;
+use Klassen\Zutat;
 
 use Klassen\Datei;
 use Klassen\Dateimanager;
@@ -28,7 +34,7 @@ class Seitensteuerung
 			case "von_uns":				$this->actionVon_uns();				break;
 			case "shake_suchen":		$this->actionShake_suchen();    	break;
 			case "shake_schreiben":		$this->actionShake_schreiben();		break;
-			case "shake_bearbeiten":	$this->actionVerwaltung();			break;
+			case "shake_bearbeiten":	$this->actionShake_bearbeiten();	break;
 			case "kontakt":				$this->actionKontakt();				break;
 			case "impressum":			$this->actionImpressum();			break;
 			case "agb":					$this->actionAGB();					break;
@@ -47,6 +53,10 @@ class Seitensteuerung
 	{
 		#$this->content = "<h1>Von uns</h1>";
 		$this->content = file_get_contents("templates/von_uns.html");
+
+		#$db = new \klassen\PDO\Datenbank();
+		$db = new Datenbank();
+		$rezept = new Rezept();
 	}
 	protected function actionShake_suchen()
 	{
@@ -67,6 +77,35 @@ class Seitensteuerung
 			// Die Zeichenkette in die Datei schreiben
 			file_put_contents("shakerezepten/$dateiname.txt", $speicherbare_zeichenkette);
 			$this->content .= "Daten wurden gespeichert";
+
+			$db = new Datenbank(); 				#  BEI use Klassen\PDO\Datenbank;
+			# $db = new \Klassen\PDO\Datenbank(); #	ohne use
+			
+			$dominierte_zutat_typ = $db->sql_select("select * from zutat where zutat_id =".$this->formData["zutat_typ"]);		
+			
+			$datei = new Datei($_FILES["uploaddatei"]);
+			$dateimanager = new Dateimanager();
+			
+			$db->sql_insert
+				("insert into rezepte 
+					(rezension, rezept_name, zutaten_list, preisstufe, rezeptbild)
+				values
+					(
+					:platzhalter_rezension, 
+					:platzhalter_rezept_name, 
+					:platzhalter_zutaten_list, 
+					:platzhalter_zutat_typ,
+					:platzhalter_rezeptbild
+					)",
+					array
+					(
+						"platzhalter_rezension" => 1,						// DEFAULT
+						"platzhalter_rezept_name" => $this->formData["rezept_name"],
+						"platzhalter_zutaten_list" => $this->formData["zutaten_list"],
+						"platzhalter_zutat_typ" => $this->formData["zutat_typ"],
+						"platzhalter_rezeptbild" => $dateimanager->datei_hochladen($datei->getDateiinfo())
+					)
+				);			
 		}
 		else
 		{
@@ -74,9 +113,38 @@ class Seitensteuerung
 			$this->content .= file_get_contents("templates/shake_schreiben_formular.html");
 		}
 	}
-	protected function actionVerwaltung()
+	protected function actionShake_bearbeiten()
 	{
 		$this->content = "<h1>Shake bearbeiten</h1>";
+		
+				// Teiltemplate
+		$this->content .= file_get_contents("templates/shake_bearbeiten_tabelle_oben.html");
+		
+		$db = new Datenbank();
+		
+		$rezepte = $db->sql_select("select * from rezepte LEFT JOIN rezension 
+									ON rezepte.rezension = rezension.rezension_id");
+		foreach($rezepte as $nr => $rezept)
+		{
+			// Teiltemplate
+			$zeichenkette =  file_get_contents("templates/shake_bearbeiten_tabelle_mitte.html");
+			
+			$austausch_array = array(	"__REZEPTENAME__" 			=> $rezept["rezept_name"],
+										"__REZEPTID__" 				=> $rezept["rezept_id"],
+										"__ZUTATENLIST__" 			=> $rezept["zutaten_list"],
+										"__REZEPT_BESCHREIBEN__" 	=> $rezept["rezept_beschreibung"],
+										"__BILD__" 					=> $rezept["rezeptbild"]
+									);		
+
+			foreach($austausch_array as $platzhalter => $austauschwert)
+			{		
+				$zeichenkette  = suchen_und_ersetzen($platzhalter, $austauschwert,	$zeichenkette);
+			}		
+			$this->content .= $zeichenkette;	
+		}
+		
+				// Teiltemplate
+		$this->content .= file_get_contents("templates/shake_bearbeiten_tabelle_unten.html");
 	}
 	
 	protected function actionKontakt()

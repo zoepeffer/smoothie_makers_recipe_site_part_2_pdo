@@ -1,4 +1,5 @@
 <?php
+namespace Klassen;
 class Selection
 {
 	// Attribute

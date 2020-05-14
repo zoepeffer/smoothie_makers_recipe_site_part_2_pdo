@@ -1,4 +1,5 @@
 <?php
+namespace Klassen;
 class Bearbeitung
 {
 	// Attribute
