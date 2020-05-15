@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 14. Mai 2020 um 15:30
+-- Erstellungszeit: 15. Mai 2020 um 16:13
 -- Server-Version: 10.4.11-MariaDB
 -- PHP-Version: 7.4.4
 
@@ -184,7 +184,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `email`, `user_name`, `passwort`, `login`) VALUES
-(1, '', 'Smoothie Maker', '906072001efddf3e11e6d2b5782f4777fe038739', 'login');
+(1, '', 'Smoothie Maker', '$2y$10$L2SrVQ8Ll5lO.OvyBHBzYOXuzXwGoIBwrzTHuFwKzCUNAVNk47uXe', 'login');
 
 -- --------------------------------------------------------
 

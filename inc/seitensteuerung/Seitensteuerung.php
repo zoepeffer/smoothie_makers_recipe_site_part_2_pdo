@@ -28,27 +28,63 @@ class Seitensteuerung
 	public function selectPage($page)
 	{
 		$this->action = $page;
+
+		if(isset($_POST["login_formular"]))
+		{
+			$db = new Datenbank();
+			$user = $db->sql_select("select * from user where login =:login",
+											array("login" => $_POST['login']));
+			if(count($user) == 1)
+			{			
+				$hash = $user[0]["passwort"]; # $2y$10$L2SrVQ8Ll5lO.OvyBHBzYOXuzXwGoIBwrzTHuFwKzCUNAVNk47uXe
+				if(password_verify($_POST["passwort"], $hash))
+				{
+					$_SESSION["user_id"] = $user[0]["user_id"];
+				}
+			}
+		}
+		
 		
 		switch($this->action)
 		{
-			case "von_uns":				$this->actionVon_uns();				break;
-			case "shake_suchen":		$this->actionShake_suchen();    	break;
-			case "shake_schreiben":		$this->actionShake_schreiben();		break;
-			case "shake_bearbeiten":	$this->actionShake_bearbeiten();	break;
-			case "kontakt":				$this->actionKontakt();				break;
-			case "impressum":			$this->actionImpressum();			break;
-			case "agb":					$this->actionAGB();					break;
-			case "download":			$this->actionDownload();			break;
-			case "veraltet":			$this->actionVeraltet();			break;
+			case "von_uns":				$this->actionVon_uns();					break;
+			case "smoothie_suchen":		$this->actionSmoothie_suchen();  	  	break;
+			case "smoothie_schreiben":	$this->actionSmoothie_schreiben();		break;
+			case "smoothie_bearbeiten":	$this->actionSmoothie_bearbeiten();		break;
+
+			#case "login":				$this->actionLogin();					break;
+			case "logout":				$this->actionLogout();					break;
+
+			case "kontakt":				$this->actionKontakt();					break;
+			case "impressum":			$this->actionImpressum();				break;
+			case "agb":					$this->actionAGB();						break;
+			case "download":			$this->actionDownload();				break;
+			case "veraltet":			$this->actionVeraltet();				break;
 			default:					$this->actionSeiteNichtGefunden();
 		}
 		// Template Vorlage holen
 		$zeichenkette = file_get_contents($this->template);
 		//echo $zeichenkette;
+		$logout_string = "";
+		$login_string = "";
+		
+		if(isset($_SESSION["user_id"]))
+		{
+			$logout_string = '<a href="index.php?action=logout">Logout</a>';
+		}
+		else
+		{
+			#$login_string = '<a href="index.php?action=login">Login</a>';
+		}	
+		
+		
+		$zeichenkette = suchen_und_ersetzen("__#__LOGIN__#__", $login_string,	$zeichenkette);
+		$zeichenkette = suchen_und_ersetzen("__#__LOGOUT__#__", $logout_string,	$zeichenkette);
+		
 		$ersatztext = suchen_und_ersetzen("__#__CONTENT__#__", $this->content,	$zeichenkette);
 		return $ersatztext;
 	}
-	
+
 	protected function actionVon_uns()
 	{
 		#$this->content = "<h1>Von uns</h1>";
@@ -58,24 +94,24 @@ class Seitensteuerung
 		$db = new Datenbank();
 		$rezept = new Rezept();
 	}
-	protected function actionShake_suchen()
+	protected function actionSmoothie_suchen()
 	{
-		$this->content = "<h1>Shake suchen</h1>";
+		$this->content = "<h1>Smoothie suchen</h1>";
 	}
-	protected function actionShake_schreiben()
+	protected function actionSmoothie_schreiben()
 	{
-		$this->content = "<h1>Shake schreiben</h1>";
+		$this->content = "<h1>Smoothie schreiben</h1>";
 		$this->formData = $_POST;
 		// Speichern der Daten in einer TXT-Datei
 		// Wenn das Formular verschickt wurde
-		if(isset($this->formData["shake_schreiben"]))
+		if(isset($this->formData["smoothie_schreiben"]))
 		{
 			// Post Array umwandeln in eine serialisierte Version einer Zeichenkette
 			$speicherbare_zeichenkette = serialize($this->formData);
 			// Dateiname generieren
-			$dateiname = uniqid("shakerezepte_"); // paketsendung_5b28d75206bec
+			$dateiname = uniqid("smoothierezepte_"); // paketsendung_5b28d75206bec
 			// Die Zeichenkette in die Datei schreiben
-			file_put_contents("shakerezepten/$dateiname.txt", $speicherbare_zeichenkette);
+			file_put_contents("smoothierezepten/$dateiname.txt", $speicherbare_zeichenkette);
 			$this->content .= "Daten wurden gespeichert";
 
 			$db = new Datenbank(); 				#  BEI use Klassen\PDO\Datenbank;
@@ -110,43 +146,38 @@ class Seitensteuerung
 		else
 		{
 			// Teiltemplate
-			$this->content .= file_get_contents("templates/shake_schreiben_formular.html");
+			$this->content .= file_get_contents("templates/smoothie_schreiben_formular.html");
 		}
 	}
-	protected function actionShake_bearbeiten()
+	protected function actionSmoothie_bearbeiten()
 	{
-		$this->content = "<h1>Shake bearbeiten</h1>";
-		
-				// Teiltemplate
-		$this->content .= file_get_contents("templates/shake_bearbeiten_tabelle_oben.html");
-		
-		$db = new Datenbank();
-		
-		$rezepte = $db->sql_select("select * from rezepte LEFT JOIN rezension 
-									ON rezepte.rezension = rezension.rezension_id");
-		foreach($rezepte as $nr => $rezept)
+		if(isset($_SESSION["user_id"]))
 		{
-			// Teiltemplate
-			$zeichenkette =  file_get_contents("templates/shake_bearbeiten_tabelle_mitte.html");
 			
-			$austausch_array = array(	"__REZEPTENAME__" 			=> $rezept["rezept_name"],
-										"__REZEPTID__" 				=> $rezept["rezept_id"],
-										"__ZUTATENLIST__" 			=> $rezept["zutaten_list"],
-										"__REZEPT_BESCHREIBEN__" 	=> $rezept["rezept_beschreibung"],
-										"__BILD__" 					=> $rezept["rezeptbild"]
-									);		
-
-			foreach($austausch_array as $platzhalter => $austauschwert)
-			{		
-				$zeichenkette  = suchen_und_ersetzen($platzhalter, $austauschwert,	$zeichenkette);
-			}		
-			$this->content .= $zeichenkette;	
-		}
-		
-				// Teiltemplate
-		$this->content .= file_get_contents("templates/shake_bearbeiten_tabelle_unten.html");
+			$this->content = "<h1>Bearbeitung</h1>";
+			include("smoothie_bearbeiten.php");
+			
+		}		
+		else
+		{
+			$this->actionLogin(); // Weiterleitung zum Login
+		}	
 	}
 	
+	
+	protected function actionLogin()
+	{
+		$this->content = "<h1>Login</h1>";
+		// Teiltemplate
+		$this->content .= file_get_contents("templates/login_formular.html");		
+	}	
+	
+	protected function actionLogout()
+	{
+		$this->content = "<h1>Logout</h1>";
+		$this->content .= "Sie sind nun abgemeldet";
+		unset($_SESSION["user_id"]);
+	}		
 	protected function actionKontakt()
 	{
 		$this->content = "<h1>Kontakt</h1>";

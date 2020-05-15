@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once("inc/funktionen/zeichenketten_funktionen.inc.php");
 require_once("inc/funktionen/datum_und_zeit_funktionen.inc.php");
 

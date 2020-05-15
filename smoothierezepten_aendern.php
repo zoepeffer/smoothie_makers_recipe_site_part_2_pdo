@@ -11,7 +11,7 @@ Vorgehensweise
 5. file_put_contents
 */
 // lesen einer Datei
-$rohdaten = file_get_contents("shakerezepten/shakerezepten_5eb10bf339777.txt");
+$rohdaten = file_get_contents("smoothierezepten/smoothierezepten_5eb10bf339777.txt");
 echo $rohdaten;
 
 // umwandeln in den normalen Zustand vorher
@@ -29,7 +29,7 @@ print_r($formulardaten);
 echo "</pre>";
 
 $speicherbare_zeichenkette = serialize($formulardaten);
-$anzahl_der_zeichen = file_put_contents("shakerezepten/formulardaten.txt", 
+$anzahl_der_zeichen = file_put_contents("smoothierezepten/formulardaten.txt", 
 										$speicherbare_zeichenkette);
 echo $anzahl_der_zeichen;
 ?>
