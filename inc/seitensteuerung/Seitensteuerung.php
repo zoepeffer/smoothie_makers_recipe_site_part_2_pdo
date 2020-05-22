@@ -155,8 +155,79 @@ class Seitensteuerung
 		{
 			
 			$this->content = "<h1>Bearbeitung</h1>";
-			include("smoothie_bearbeiten.php");
+
+
+
+
+
+
+
 			
+			# Datenverarbeitung
+			#echo "<pre>";
+			#print_r($_POST);
+			#echo "</pre>";			
+			
+			if(isset($_POST["rezension_id"]))
+			{
+				$teile = explode(";", $_POST["rezension_id"]);
+				$rezension_id = $teile[0];
+				$beschreibung = $teile[1];
+				$db = new Datenbank();
+				$db->sql_update("update rezepte set rezension = '".$rezension_id."' 
+								where rezept_id='".$_POST["rezept_id"]."'");
+				$db->sql_insert("insert into bearbeitung (auftragnr, user_id, art_der_taetigkeit)
+												 values (:auftragnr, :mitarbeiternr, :art_der_taetigkeit)",
+								
+								array("auftragnr" => $_POST["auftragnr"],
+									  "mitarbeiternr" => $_SESSION["mitarbeiternr"],
+									  "art_der_taetigkeit" => $beschreibung));	
+				$this->content .= "<div style='color:red;'>Der Status wurde geändert!</div>";									  
+			}
+			
+			if(isset($_POST["absender"]) && isset($_POST["empfaenger"]))
+			{
+				$db = new Datenbank();
+				$db->sql_update("update auftraege set 
+								absender = :absender, 
+								empfaenger = :empfaenger 
+								where auftragnr=:auftragnr",
+								array(
+								 "absender" => $_POST["absender"],
+								 "empfaenger" => $_POST["empfaenger"],
+								 "auftragnr" => $_POST["auftragnr"]
+								)
+								);	
+				$this->content .= "<div style='color:red;'>Die Daten wurden geändert!</div>";		
+			}
+			
+			if(isset($_POST["loeschen"]))
+			{
+				$db = new Datenbank();
+				$this->content .= $db->sql_delete("delete from bearbeitung where auftragnr = ".$_POST["auftragnr"]);
+				$this->content .= $db->sql_delete("delete from auftraege where auftragnr = ".$_POST["auftragnr"]);
+				$this->content .= "<div style='color:red;'>Die Daten wurden gelöscht!</div>";	
+			}	
+			
+			# Darstellung
+			switch(@$_GET["modus"])
+			{
+				case "details":		include("smoothie_details.php");				break;
+				case "loeschen":	include("smoothie_loeschbestaetigung.php");	break;
+				default:			include("smoothie_bearbeiten.php");
+			}
+
+			
+
+
+
+
+
+
+
+
+
+
 		}		
 		else
 		{
