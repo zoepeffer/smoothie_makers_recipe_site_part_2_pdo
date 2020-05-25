@@ -5,7 +5,7 @@ class Dateimanager
 	public function datei_hochladen($datei)
 	{
 		$datei_tempname = $datei["tmp_name"]; // Wie heißt die Datei auf dem Server?
-		$neuer_dateiname = uniqid("bild_").".png"; // bild_4743828dfjkw48357.png
+		$neuer_dateiname = uniqid("smoothiebild_").".png"; // smoothiebild_4743828dfjkw48357.png
 		$this->datei_kopieren($datei_tempname, $neuer_dateiname);
 		return $neuer_dateiname;	
 	}
@@ -27,3 +27,4 @@ class Dateimanager
 		readfile($datei); // Datei lesen		
 	}
 }
+?>

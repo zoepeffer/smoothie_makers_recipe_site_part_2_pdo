@@ -119,35 +119,33 @@ class Seitensteuerung
 			file_put_contents("smoothierezepten/$dateiname.txt", $speicherbare_zeichenkette);
 			$this->content .= "Daten wurden gespeichert";
 
-			$db = new Datenbank(); 				#  BEI use Klassen\PDO\Datenbank;
+			$db = new Datenbank(); 				# BEI use Klassen\PDO\Datenbank;
 			# $db = new \Klassen\PDO\Datenbank(); #	ohne use
 			
-			$dominierte_zutat_typ = $db->sql_select("select * from zutat where zutat_id =".$this->formData["option_zutat_typ"]);		
+/*			$dominierte_zutat_typ = $db->sql_select("select * from zutat where zutat_id =".$this->formData["option_zutat_typ"]);		
 			print_r($dominierte_zutat_typ);
-
+			
 			$smoothie_farbe = $db->sql_select("select * from farbe where farbe_id =".$this->formData["option_farbe"]);		
 			print_r($smoothie_farbe);
 			
-			$dominierte_zutat_typ = $db->sql_select("select * from selektion where selektion_id =".$this->formData["option_selektion"]);		
-			print_r($dominierte_zutat_typ);
+			$smoothie_selektion = $db->sql_select("select * from selektion where selektion_id =".$this->formData["option_selektion"]);		
+			print_r($smoothie_selektion);
 
-			$dominierte_zutat_typ = $db->sql_select("select * from geschmack where geschmack_id =".$this->formData["option_geschmack"]);		
-			print_r($dominierte_zutat_typ);
-
+			$smoothie_geschmack = $db->sql_select("select * from geschmack where geschmack_id =".$this->formData["option_geschmack"]);		
+			print_r($smoothie_geschmack);
+*/
 			$datei = new Datei($_FILES["uploaddatei"]);
 			$dateimanager = new Dateimanager();
 			
 			$db->sql_insert
 				("insert into rezepte 
-					(rezept_id, rezension, user_id, farbe_id, zutat_typ, zutat_name, geschmack_id, selektion_id, bearbeitung_id, rezept_name, zutaten_list, rezept_beschreibung, rezeptbild)
+					(rezension, user_id, farbe_id, zutat_typ, geschmack_id, selektion_id, bearbeitung_id, rezept_name, zutaten_list, rezept_beschreibung, rezeptbild)
 				values
 					(
-					:platzhalter_rezept_id, 
 					:platzhalter_rezension,
 					:platzhalter_user_id,	
 					:platzhalter_farbe_id,
 					:platzhalter_zutat_typ,
-					:platzhalter_zutat_name, 
 					:platzhalter_geschmack_id,
 					:platzhalter_selektion_id,
 					:platzhalter_bearbeitung_id,
@@ -158,12 +156,10 @@ class Seitensteuerung
 					)",
 					array
 					(
-						"platzhalter_rezept_id" => uniqid(),
 						"platzhalter_rezension" => 1,						// DEFAULT
 						"platzhalter_user_id" => 1,						// DEFAULT bitte dinamisch SESSION
 						"platzhalter_farbe_id" => $this->formData["option_farbe"],
 						"platzhalter_zutat_typ" => $this->formData["option_zutat_typ"],
-						"platzhalter_preis" => $dominierte_zutat_typ[0]["zutat_name"],
 						"platzhalter_geschmack_id" => $this->formData["option_geschmack"],
 						"platzhalter_selektion_id" => $this->formData["option_selektion"],
 						"platzhalter_bearbeitung_id" => 2,						// DEFAULT
@@ -208,15 +204,15 @@ class Seitensteuerung
 				$db->sql_update("update rezepte set rezension = '".$rezension_id."' 
 								where rezept_id='".$_POST["rezept_id"]."'");
 				$db->sql_insert("insert into bearbeitung (rezept_id, user_id, art_der_taetigkeit)
-												 values (:rezept_id, :mitarbeiternr, :art_der_taetigkeit)",
+												 values (:rezept_id, :user_id, :art_der_taetigkeit)",
 								
 								array("rezept_id" => $_POST["rezept_id"],
-									  "mitarbeiternr" => $_SESSION["mitarbeiternr"],
+									  "mitarbeiternr" => $_SESSION["user_id"],
 									  "art_der_taetigkeit" => $beschreibung));	
 				$this->content .= "<div style='color:red;'>Der Rezension wurde geändert!</div>";									  
 			}
 			
-			if(isset($_POST["absender"]) && isset($_POST["empfaenger"]))
+			if(isset($_POST["rezept_name"]) && isset($_POST["zutaten_list"]))
 			{
 				$db = new Datenbank();
 				$db->sql_update("update rezepte set 
