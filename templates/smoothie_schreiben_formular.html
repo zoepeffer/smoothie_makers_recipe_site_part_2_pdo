@@ -1,34 +1,40 @@
 <form action='' method='post'>
 
-Smoothie Name:<br /> <textarea name='absender'></textarea><br />
-Zutaten List:<br /> <textarea name='empfaenger'></textarea><br />
-Smoothie Beschreiben:<br /> <textarea name='absender'></textarea><br />
+Smoothie Name:<br /> <textarea name='neu_rezept_name'></textarea><br />
+Zutaten List:<br /> <textarea name='neu_zutaten_list'></textarea><br />
+Smoothie Beschreibung:<br /> <textarea name='neu_rezept_beschreibung'></textarea><br />
 
 <h2>Dominierte Zutat-Typ</h2>
-<select name='boxnr'>
-<option value='1'>Box 1: 30cm</option>
-<option value='2'>Box 2: 60cm</option>
-<option value='3'>Box 3: 100cm</option>
+<select name='option_zutat_typ'>
+<option value='1'>Himbeer</option>
+<option value='2'>Erdbeer</option>
+<option value='3'>Mango</option>
 </select><br />
 
 <h2>Farbe?</h2>
-<select name='boxnr'>
-<option value='1'>Box 1: 30cm</option>
-<option value='2'>Box 2: 60cm</option>
-<option value='3'>Box 3: 100cm</option>
+<select name='option_farbe'>
+<option value='1'>gelb</option>
+<option value='2'>rot</option>
+<option value='3'>grün</option>
 </select><br />
 
-<h2>Dominierte Zutat-Typ</h2>
-<select name='boxnr'>
-<option value='1'>Box 1: 30cm</option>
-<option value='2'>Box 2: 60cm</option>
-<option value='3'>Box 3: 100cm</option>
+<h2>Ist das laktosefrei?</h2>
+<select name='option_selektion'>
+<option value='1'>laktosefrei</option>
+<option value='6'>mit Michprodukte</option>
+</select><br />
+
+<h2>Geschmack?</h2>
+<select name='option_geschmack'>
+<option value='1'>salzig</option>
+<option value='2'>natur</option>
+<option value='3'>süßsauer</option>
 </select><br />
 
 <br /><br />
-
+<h2>Bild hochladen</h2>
 <input type="file" name="uploaddatei" />	
 <br /><br />
-<br /><input type='submit' name='paket_versenden' value='Paket versenden'/>
+<br /><input type='submit' name='smoothie_schreiben' value='Smoothie schreiben'/>
 
 </form>

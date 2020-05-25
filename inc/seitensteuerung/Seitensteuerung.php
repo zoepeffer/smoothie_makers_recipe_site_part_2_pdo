@@ -96,8 +96,13 @@ class Seitensteuerung
 	}
 	protected function actionSmoothie_suchen()
 	{
-		$this->content = "<h1>Smoothie suchen</h1>";
+		$this->content = "<h1>Smoothie  Makers suchen</h1>";
 	}
+
+
+
+
+
 	protected function actionSmoothie_schreiben()
 	{
 		$this->content = "<h1>Smoothie schreiben</h1>";
@@ -109,7 +114,7 @@ class Seitensteuerung
 			// Post Array umwandeln in eine serialisierte Version einer Zeichenkette
 			$speicherbare_zeichenkette = serialize($this->formData);
 			// Dateiname generieren
-			$dateiname = uniqid("smoothierezepte_"); // paketsendung_5b28d75206bec
+			$dateiname = uniqid("smoothierezepte_"); // smoothierezepte_5b28d75206bec
 			// Die Zeichenkette in die Datei schreiben
 			file_put_contents("smoothierezepten/$dateiname.txt", $speicherbare_zeichenkette);
 			$this->content .= "Daten wurden gespeichert";
@@ -117,28 +122,54 @@ class Seitensteuerung
 			$db = new Datenbank(); 				#  BEI use Klassen\PDO\Datenbank;
 			# $db = new \Klassen\PDO\Datenbank(); #	ohne use
 			
-			$dominierte_zutat_typ = $db->sql_select("select * from zutat where zutat_id =".$this->formData["zutat_typ"]);		
+			$dominierte_zutat_typ = $db->sql_select("select * from zutat where zutat_id =".$this->formData["option_zutat_typ"]);		
+			print_r($dominierte_zutat_typ);
+
+			$smoothie_farbe = $db->sql_select("select * from farbe where farbe_id =".$this->formData["option_farbe"]);		
+			print_r($smoothie_farbe);
 			
+			$dominierte_zutat_typ = $db->sql_select("select * from selektion where selektion_id =".$this->formData["option_selektion"]);		
+			print_r($dominierte_zutat_typ);
+
+			$dominierte_zutat_typ = $db->sql_select("select * from geschmack where geschmack_id =".$this->formData["option_geschmack"]);		
+			print_r($dominierte_zutat_typ);
+
 			$datei = new Datei($_FILES["uploaddatei"]);
 			$dateimanager = new Dateimanager();
 			
 			$db->sql_insert
 				("insert into rezepte 
-					(rezension, rezept_name, zutaten_list, preisstufe, rezeptbild)
+					(rezept_id, rezension, user_id, farbe_id, zutat_typ, zutat_name, geschmack_id, selektion_id, bearbeitung_id, rezept_name, zutaten_list, rezept_beschreibung, rezeptbild)
 				values
 					(
-					:platzhalter_rezension, 
+					:platzhalter_rezept_id, 
+					:platzhalter_rezension,
+					:platzhalter_user_id,	
+					:platzhalter_farbe_id,
+					:platzhalter_zutat_typ,
+					:platzhalter_zutat_name, 
+					:platzhalter_geschmack_id,
+					:platzhalter_selektion_id,
+					:platzhalter_bearbeitung_id,
 					:platzhalter_rezept_name, 
 					:platzhalter_zutaten_list, 
-					:platzhalter_zutat_typ,
+					:platzhalter_rezept_beschreibung,
 					:platzhalter_rezeptbild
 					)",
 					array
 					(
+						"platzhalter_rezept_id" => uniqid(),
 						"platzhalter_rezension" => 1,						// DEFAULT
-						"platzhalter_rezept_name" => $this->formData["rezept_name"],
-						"platzhalter_zutaten_list" => $this->formData["zutaten_list"],
-						"platzhalter_zutat_typ" => $this->formData["zutat_typ"],
+						"platzhalter_user_id" => 1,						// DEFAULT bitte dinamisch SESSION
+						"platzhalter_farbe_id" => $this->formData["option_farbe"],
+						"platzhalter_zutat_typ" => $this->formData["option_zutat_typ"],
+						"platzhalter_preis" => $dominierte_zutat_typ[0]["zutat_name"],
+						"platzhalter_geschmack_id" => $this->formData["option_geschmack"],
+						"platzhalter_selektion_id" => $this->formData["option_selektion"],
+						"platzhalter_bearbeitung_id" => 2,						// DEFAULT
+						"platzhalter_rezept_name" => $this->formData["neu_rezept_name"],
+						"platzhalter_zutaten_list" => $this->formData["neu_zutaten_list"],
+						"platzhalter_rezept_beschreibung" => $this->formData["neu_rezept_beschreibung"],
 						"platzhalter_rezeptbild" => $dateimanager->datei_hochladen($datei->getDateiinfo())
 					)
 				);			
@@ -176,26 +207,26 @@ class Seitensteuerung
 				$db = new Datenbank();
 				$db->sql_update("update rezepte set rezension = '".$rezension_id."' 
 								where rezept_id='".$_POST["rezept_id"]."'");
-				$db->sql_insert("insert into bearbeitung (auftragnr, user_id, art_der_taetigkeit)
-												 values (:auftragnr, :mitarbeiternr, :art_der_taetigkeit)",
+				$db->sql_insert("insert into bearbeitung (rezept_id, user_id, art_der_taetigkeit)
+												 values (:rezept_id, :mitarbeiternr, :art_der_taetigkeit)",
 								
-								array("auftragnr" => $_POST["auftragnr"],
+								array("rezept_id" => $_POST["rezept_id"],
 									  "mitarbeiternr" => $_SESSION["mitarbeiternr"],
 									  "art_der_taetigkeit" => $beschreibung));	
-				$this->content .= "<div style='color:red;'>Der Status wurde geändert!</div>";									  
+				$this->content .= "<div style='color:red;'>Der Rezension wurde geändert!</div>";									  
 			}
 			
 			if(isset($_POST["absender"]) && isset($_POST["empfaenger"]))
 			{
 				$db = new Datenbank();
-				$db->sql_update("update auftraege set 
-								absender = :absender, 
-								empfaenger = :empfaenger 
-								where auftragnr=:auftragnr",
+				$db->sql_update("update rezepte set 
+								rezept_name = :rezept_name, 
+								zutaten_list = :zutaten_list 
+								where rezept_id=:rezept_id",
 								array(
-								 "absender" => $_POST["absender"],
-								 "empfaenger" => $_POST["empfaenger"],
-								 "auftragnr" => $_POST["auftragnr"]
+								 "rezept_name" => $_POST["rezept_name"],
+								 "zutaten_list" => $_POST["zutaten_list"],
+								 "rezept_id" => $_POST["rezept_id"]
 								)
 								);	
 				$this->content .= "<div style='color:red;'>Die Daten wurden geändert!</div>";		
@@ -204,8 +235,8 @@ class Seitensteuerung
 			if(isset($_POST["loeschen"]))
 			{
 				$db = new Datenbank();
-				$this->content .= $db->sql_delete("delete from bearbeitung where auftragnr = ".$_POST["auftragnr"]);
-				$this->content .= $db->sql_delete("delete from auftraege where auftragnr = ".$_POST["auftragnr"]);
+				$this->content .= $db->sql_delete("delete from bearbeitung where rezept_id = ".$_POST["rezept_id"]);
+				$this->content .= $db->sql_delete("delete from rezepte where rezept_id = ".$_POST["rezept_id"]);
 				$this->content .= "<div style='color:red;'>Die Daten wurden gelöscht!</div>";	
 			}	
 			
@@ -213,7 +244,7 @@ class Seitensteuerung
 			switch(@$_GET["modus"])
 			{
 				case "details":		include("smoothie_details.php");				break;
-				case "loeschen":	include("smoothie_loeschbestaetigung.php");	break;
+				case "loeschen":	include("smoothie_loeschbestaetigung.php");  	break;
 				default:			include("smoothie_bearbeiten.php");
 			}
 

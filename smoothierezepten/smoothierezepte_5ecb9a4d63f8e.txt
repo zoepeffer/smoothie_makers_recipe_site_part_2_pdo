@@ -1,0 +1,1 @@
+a:9:{s:11:"rezept_name";s:4:"cdcd";s:12:"zutaten_list";s:3:"cdc";s:19:"rezept_beschreibung";s:4:"dcdc";s:9:"zutat_typ";s:1:"1";s:8:"farbe_id";s:1:"1";s:12:"selektion_id";s:1:"1";s:12:"geschmack_id";s:1:"1";s:11:"uploaddatei";s:13:"hqdefault.jpg";s:18:"smoothie_schreiben";s:18:"Smoothie schreiben";}
