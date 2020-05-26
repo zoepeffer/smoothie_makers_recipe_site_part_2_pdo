@@ -22,7 +22,7 @@ print_r($formulardaten);
 echo "</pre>";
 
 // neuer Eintrag
-$formulardaten["status"] = "erledigt";
+$formulardaten["rezension"] = "erledigt";
 
 echo "<pre>";
 print_r($formulardaten);

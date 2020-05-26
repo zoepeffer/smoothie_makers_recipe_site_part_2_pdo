@@ -68,13 +68,11 @@ else
 		.$rezensionzeile["rezension_beschreibung"].'</option>';
 	}
 	$rezension_formular = suchen_und_ersetzen("__OPTIONEN__", $optionen	,	$rezension_formular);
-	$rezension_formular = suchen_und_ersetzen("__REZENSION_ID__", $smoothie[0]["rezept_id"]	,	$rezension_formular);	
+	$rezension_formular = suchen_und_ersetzen("__REZEPT_ID__", $smoothie[0]["rezept_id"]	,	$rezension_formular);	
 	
 	$zeichenkette = suchen_und_ersetzen("__REZENSION__", $rezension_formular	,	$zeichenkette);	
 	
 }
-
-
 $bearbeitung_formular = file_get_contents("templates/smoothie_bearbeitung_formular.html");	
 
 
@@ -83,24 +81,6 @@ $bearbeitung_formular = suchen_und_ersetzen("__ZUTATEN_LIST__", $smoothie[0]["zu
 $bearbeitung_formular =	suchen_und_ersetzen("__REZEPT_ID__", $smoothie[0]["rezept_id"]	,	$bearbeitung_formular);
 
 $zeichenkette = suchen_und_ersetzen("__DETAILS__", $bearbeitung_formular ,	$zeichenkette);	
-
-
-
-$redaktionliste = $db->sql_select("select * from bearbeitung 
-									where bearbeitung_id = ".$smoothie[0]['bearbeitung_id']."
-									order by datum desc");	
-									
-$redaktionell = "";
-foreach($redaktionliste as $datensatz)									
-{
-	$redaktionell .= $datensatz["user_id"]." | ";
-	$redaktionell .= $datensatz["datum"]." | ";
-	$redaktionell .= $datensatz["art_bearbeitung"];
-	$redaktionell .= "<br />";
-}										
-									
-
-$zeichenkette =		suchen_und_ersetzen("__REDAKTIONELL__", $redaktionell ,	$zeichenkette);
-									
+																	
 $this->content .= $zeichenkette;
 ?>

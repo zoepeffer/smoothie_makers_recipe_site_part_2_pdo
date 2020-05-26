@@ -34,7 +34,7 @@ $zeichenkette = suchen_und_ersetzen("__ZURUECK_LINK__",
 $zeichenkette = suchen_und_ersetzen("__HEADLINE__", 
 		$smoothie[0]["rezept_id"]." / ".
 		"User: ".$smoothie[0]["user_id"]." / ".
-		"Rezept Name: ".$auftrag[0]["rezept_name"]
+		"Rezept Name: ".$smoothie[0]["rezept_name"]
 		,	$zeichenkette);
 		
 // ############################################################# 
@@ -62,25 +62,6 @@ $details .= "Bilddatei:".$smoothie[0]["rezeptbild"]."<br />";
 $zeichenkette = suchen_und_ersetzen("__DETAILS__", $details ,	$zeichenkette);		
 
 
-// ############################################################# 
-// Redaktionell	
-// #############################################################
-$ereignisliste = $db->sql_select("select * from bearbeitung 
-									where rezept_id = ".$smoothie[0]['rezept_id']."
-									order by datum desc");	
-
-$redaktionell = "";
-foreach($ereignisliste as $datensatz)									
-{
-	$redaktionell .= $datensatz["user_id"]." | ";
-	$redaktionell .= $datensatz["datum"]." | ";
-	$redaktionell .= $datensatz["art_der_taetigkeit"];
-	$redaktionell .= "<br />";
-}	
-
-$zeichenkette = suchen_und_ersetzen("__REDAKTIONELL__", $redaktionell ,	$zeichenkette);
-
-
 $this->content .= $zeichenkette;
 
 $this->content .= "<h1>Wollen Sie wirklich löschen?</h1>";
@@ -89,4 +70,5 @@ $this->content .= "<form action='?action=smoothie_bearbeiten' method='post'>
 					<input type='submit' name='loeschen' value='Bestätigen'>
 					<input type='hidden' name='rezept_id' value='".$smoothie[0]["rezept_id"]."' />
 					</form>";	
+
 ?>

@@ -183,13 +183,6 @@ class Seitensteuerung
 			
 			$this->content = "<h1>Bearbeitung</h1>";
 
-
-
-
-
-
-
-			
 			# Datenverarbeitung
 			#echo "<pre>";
 			#print_r($_POST);
@@ -199,16 +192,9 @@ class Seitensteuerung
 			{
 				$teile = explode(";", $_POST["rezension_id"]);
 				$rezension_id = $teile[0];
-				$beschreibung = $teile[1];
 				$db = new Datenbank();
 				$db->sql_update("update rezepte set rezension = '".$rezension_id."' 
 								where rezept_id='".$_POST["rezept_id"]."'");
-				$db->sql_insert("insert into bearbeitung (rezept_id, user_id, art_der_taetigkeit)
-												 values (:rezept_id, :user_id, :art_der_taetigkeit)",
-								
-								array("rezept_id" => $_POST["rezept_id"],
-									  "mitarbeiternr" => $_SESSION["user_id"],
-									  "art_der_taetigkeit" => $beschreibung));	
 				$this->content .= "<div style='color:red;'>Der Rezension wurde geändert!</div>";									  
 			}
 			
@@ -231,7 +217,6 @@ class Seitensteuerung
 			if(isset($_POST["loeschen"]))
 			{
 				$db = new Datenbank();
-				$this->content .= $db->sql_delete("delete from bearbeitung where rezept_id = ".$_POST["rezept_id"]);
 				$this->content .= $db->sql_delete("delete from rezepte where rezept_id = ".$_POST["rezept_id"]);
 				$this->content .= "<div style='color:red;'>Die Daten wurden gelöscht!</div>";	
 			}	
@@ -244,16 +229,7 @@ class Seitensteuerung
 				default:			include("smoothie_bearbeiten.php");
 			}
 
-			
-
-
-
-
-
-
-
-
-
+	
 
 		}		
 		else

@@ -1,0 +1,1 @@
+a:8:{s:15:"neu_rezept_name";s:7:"Zoetest";s:16:"neu_zutaten_list";s:35:"ZoetestZoetestZoetestZoetestZoetest";s:23:"neu_rezept_beschreibung";s:49:"ZoetestZoetestZoetestZoetestZoetestZoetestZoetest";s:16:"option_zutat_typ";s:1:"1";s:12:"option_farbe";s:1:"1";s:16:"option_selektion";s:1:"1";s:16:"option_geschmack";s:1:"3";s:18:"smoothie_schreiben";s:18:"Smoothie schreiben";}
