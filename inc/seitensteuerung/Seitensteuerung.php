@@ -105,7 +105,7 @@ class Seitensteuerung
 
 	protected function actionSmoothie_schreiben()
 	{
-		$this->content = "<h1>Smoothie schreiben</h1>";
+		$this->content = "";
 		$this->formData = $_POST;
 		// Speichern der Daten in einer TXT-Datei
 		// Wenn das Formular verschickt wurde

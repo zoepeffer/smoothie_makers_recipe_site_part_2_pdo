@@ -1,40 +1,92 @@
+
+        <!-- Smoothie Schreiben Section-->
 <form action='' method='post' enctype="multipart/form-data"> <!-- 2teiliger Formularversand für Datei-Upload -->
-
-Smoothie Name:<br /> <textarea name='neu_rezept_name'></textarea><br />
-Zutaten List:<br /> <textarea name='neu_zutaten_list'></textarea><br />
-Smoothie Beschreibung:<br /> <textarea name='neu_rezept_beschreibung'></textarea><br />
-
-<h2>Dominierte Zutat-Typ</h2>
-<select name='option_zutat_typ'>
-<option value='1'>Himbeer</option>
-<option value='2'>Erdbeer</option>
-<option value='3'>Mango</option>
-</select><br />
-
-<h2>Farbe?</h2>
-<select name='option_farbe'>
-<option value='1'>gelb</option>
-<option value='2'>rot</option>
-<option value='3'>grün</option>
-</select><br />
-
-<h2>Ist das laktosefrei?</h2>
-<select name='option_selektion'>
-<option value='1'>laktosefrei</option>
-<option value='6'>mit Michprodukte</option>
-</select><br />
-
-<h2>Geschmack?</h2>
-<select name='option_geschmack'>
-<option value='1'>salzig</option>
-<option value='2'>natur</option>
-<option value='3'>süßsauer</option>
-</select><br />
-
-<br /><br />
-<h2>Bild hochladen</h2>
-<input type="file" name="uploaddatei" />	
-<br /><br />
-<br /><input type='submit' name='smoothie_schreiben' value='Smoothie schreiben'/>
-
-</form>
+        <section class="page-section" id="smoothie-schreiben">
+            <div class="container">
+                <!-- Smoothie schreiben Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Smoothie schreiben</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Smoothie schreiben Section Form-->
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <form id="smoothie-schreiben-form" name="sentMessage" novalidate="novalidate">
+                            <div class="control-group">
+                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                    <label>Smoothie Name</label><textarea name='neu_rezept_name' class="form-control" id="message" rows="1" placeholder="Smoothie Name" required="required" data-validation-required-message="Please enter a message."></textarea>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                    <label>Zutaten List</label><textarea name='neu_zutaten_list' class="form-control" id="message" rows="3" placeholder="Zutaten List" required="required" data-validation-required-message="Please enter a message."></textarea>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                    <label>Smoothie Beschreibung</label><textarea name='neu_rezept_beschreibung' class="form-control" id="message" rows="5" placeholder="Smoothie Beschreibung" required="required" data-validation-required-message="Please enter a message."></textarea>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="control-group">
+                                <div>
+                                    <h4>Dominierte Zutat-Typ</h4><select name='option_zutat_typ' class="form-control">
+                                        <option value='1'>Himbeer</option>          
+                                        <option value='2'>Erdbeer</option>                  
+                                        <option value='3'>Mango</option>                             
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="control-group">
+                                <div>
+                                    <h4>Farbe?</h4><select name='option_farbe' class="form-control">
+                                        <option value='1'>gelb</option>
+                                        <option value='2'>rot</option>
+                                        <option value='3'>grün</option>                            
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="control-group">
+                                <div>
+                                    <h4>Ist das laktosefrei?</h4><select name='option_selektion' class="form-control">
+                                        <option value='1'>laktosefrei</option>
+                                        <option value='6'>mit Michprodukte</option>                            
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="control-group">
+                                <div>
+                                    <h4>Geschmack?</h4><select name='option_geschmack' class="form-control">
+                                        <option value='1'>salzig</option>
+                                        <option value='2'>natur</option>
+                                        <option value='3'>süßsauer</option>                            
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="control-group">
+                                <div>
+                                    <h4>Bild hochladen</h4>
+                                    <input type="file" name="uploaddatei" />	                          
+                                </div>
+                            </div>
+                            <br />
+                            <div id="success"></div>
+                            <div class="form-group">
+                                <input type='submit' name='smoothie_schreiben' value='Smoothie schreiben'  class="btn btn-primary btn-xl" id="sendMessageButton"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+ 

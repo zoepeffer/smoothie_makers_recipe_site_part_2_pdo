@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 15. Mai 2020 um 16:13
+-- Erstellungszeit: 26. Mai 2020 um 09:13
 -- Server-Version: 10.4.11-MariaDB
 -- PHP-Version: 7.4.4
 
@@ -108,8 +108,8 @@ INSERT INTO `rezension` (`rezension_id`, `rezension_beschreibung`, `front`) VALU
 (2, 'Lecker und gesund', 0),
 (3, 'Für Schummeltag ;)', 0),
 (4, 'Kann noch verbessert werden', 0),
-(5, 'Meisten liebt (Front)', 1),
-(6, 'Top Rezept (Front)', 1);
+(5, 'Meisten liebt (front)', 1),
+(6, 'Top Rezept (front)', 1);
 
 -- --------------------------------------------------------
 
@@ -138,13 +138,15 @@ CREATE TABLE `rezepte` (
 --
 
 INSERT INTO `rezepte` (`rezept_id`, `rezension`, `user_id`, `farbe_id`, `zutat_typ`, `geschmack_id`, `selektion_id`, `bearbeitung_id`, `rezept_name`, `rezeptdatum`, `zutaten_list`, `rezept_beschreibung`, `rezeptbild`) VALUES
+(5, 1, 1, 1, 1, 2, 1, 2, 'teszt1', '2020-05-25 13:13:36', 'teszt1teszt1teszt1', 'teszt1teszt1teszt1teszt1teszt1teszt1teszt1teszt1', 'smoothiebild_5ecbc480d05d6.png'),
 (12, 6, 1, 2, 2, 4, 1, 3, 'Erdbeeren Smoothie', '2020-03-11 14:56:45', 'Ananas Erdbeeren  Banane', 'Ananas schälen und grob würfeln. Banane schälen. Erdbeeren waschen und putzen. Mark einer halben Vanilleschote auskratzen.\r\n\r\nFein pürieren. Smoothie in ein Glas füllen.', 'smoothiebild_-1.png'),
 (17, 6, 1, 1, 3, 5, 1, 2, 'Mango Smoothie', '2020-04-21 13:56:45', '2 Mangos\r\n1 Orangen\r\n8 Maracujas', 'Mangofruchtfleisch vom Stein schneiden und in Stücke schneiden. Orangen halbieren, Saft auspressen. Maracujas halbieren, Fruchtfleisch aus der Schale löffeln.\r\n\r\nMango, Orangensaft und 6 der Maracuja fein pürieren. ', 'smoothiebild_-4.png'),
 (19, 3, 1, 2, 7, 2, 1, 3, 'Rote-Bete Smoothie', '2020-04-21 13:56:45', '4 Äpfel\r\n1 Zitrone\r\n1 Stück Ingwer\r\n4 Knolle(n) Rote Bete (vorgekocht, vakuumiert)', 'Äpfel schälen, vierteln und entkernen. Saft der Zitrone auspressen. Ingwer schälen und fein hacken.\r\n\r\nApfel, Zitronensaft, Rote Bete, Ingwer und 500 ml Wasser fein pürieren. Smoothie in ein Glas füllen.', 'smoothiebild_-5.png'),
 (20, 1, 1, 3, 6, 2, 1, 3, 'Spinat Smoothie', '2020-04-21 13:56:45', '3 TL Cashewmus\r\n1 Banane, gefroren\r\n3 Bund Spinat\r\n2 Datteln\r\n', 'Salat und Blattspinat waschen und putzen. \r\n\r\nDu brauchst\r\nSparschäler\r\nBanane schälen und grob in Stücke schneiden. Apfel vierteln, Kerngehäuse entfernen und in Stücke schneiden. Kiwi schälen und in Stücke schneiden.\r\n\r\nFein pürieren. Smoothie in ein Glas füllen.', 'smoothiebild_-7.png'),
 (21, 3, 1, 2, 4, 4, 1, 2, 'Wassermelonen Smoothie', '2020-04-08 13:56:45', '1 Limette\r\n0,5 Wassermelone\r\n200 ml Kokosdrink\r\n4 Blätter Minze\r\nEiswürfel', 'Limette halbieren, Saft auspressen. \r\n\r\nWassermelonenfruchtfleisch direkt in der Schale pürieren. Wahlweise aus der Schale löffeln und die Kerne entfernen. Fruchtfleisch mit Kokosdrink, Limettensaft und Minze nochmals fein pürieren und mit Eiswürfeln in ein Glas füllen.', 'smoothiebild_-6.png'),
 (25, 1, 1, 3, 5, 1, 6, 3, 'Avocado Smoothie', '2020-04-21 13:56:45', '1 Bund Koriander\r\n0,25 Gurke\r\n2 Avocados\r\n1 Limette\r\n1 TL Wasabi-Paste\r\n500 ml Buttermilch\r\n450 g Joghurt\r\n2 Handvoll Eiswürfel\r\nSalz\r\nPfeffer', 'Koriander waschen und Blättchen abzupfen. Gurke waschen, schälen und in Scheiben schneiden. Avocados halbieren, entkernen und Fruchtfleisch aus der Schale lösen. Limette halbieren und auspressen.\r\n\r\nAlle Zutaten in einen Mixer geben und fein pürieren.', 'smoothiebild_-8.png'),
-(27, 1, 1, 2, 1, 6, 6, 2, 'Himbeeren Smoothie', '2020-04-21 13:56:45', '200 g Himbeeren (tiefgefroren)\r\n200 g Naturjoghurt\r\n200 ml Milch\r\n60 g zarte Haferflocken\r\n2 EL Honig\r\n2 TL Chiasamen', 'Himbeeren, Naturjoghurt, Milch, Haferflocken und Honig mit 100 ml Wasser fein pürieren.\r\n\r\nSmoothie in Gläser füllen, Chiasamen darüber streuen.\r\n', 'smoothiebild_-3.png');
+(53, 1, 1, 1, 1, 2, 1, 2, 'Smoothie ', '2020-05-25 15:00:39', 'Smoothie Smoothie Smoothie ', 'Smoothie Smoothie Smoothie Smoothie Smoothie Smoothie Smoothie ', 'smoothiebild_5ecbdd9790c85.png'),
+(54, 1, 1, 2, 2, 2, 6, 2, 'anyad', '2020-05-26 07:07:59', 'anyadanyadanyadanyad', 'anyadanyadanyadanyadanyadanyadanyadanyadanyadanyadanyad', 'smoothiebild_5eccc04fdc80e.png');
 
 -- --------------------------------------------------------
 
@@ -184,7 +186,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `email`, `user_name`, `passwort`, `login`) VALUES
-(1, '', 'Smoothie Maker', '$2y$10$L2SrVQ8Ll5lO.OvyBHBzYOXuzXwGoIBwrzTHuFwKzCUNAVNk47uXe', 'login');
+(1, '', 'Smoothie Maker', '$2y$10$L2SrVQ8Ll5lO.OvyBHBzYOXuzXwGoIBwrzTHuFwKzCUNAVNk47uXe', 'login'),
+(5, 'max@max.de', 'max', '0706025b2bbcec1ed8d64822f4eccd96314938d0', 'max');
 
 -- --------------------------------------------------------
 
@@ -308,7 +311,7 @@ ALTER TABLE `rezension`
 -- AUTO_INCREMENT für Tabelle `rezepte`
 --
 ALTER TABLE `rezepte`
-  MODIFY `rezept_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `rezept_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT für Tabelle `selektion`
@@ -320,7 +323,7 @@ ALTER TABLE `selektion`
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT für Tabelle `zutat`
