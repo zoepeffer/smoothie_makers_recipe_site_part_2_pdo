@@ -87,12 +87,9 @@ class Seitensteuerung
 
 	protected function actionVon_uns()
 	{
-		#$this->content = "<h1>Von uns</h1>";
-		$this->content = file_get_contents("templates/von_uns.html");
+		$this->content = "<h1></h1>";
+		include("von_uns.php");
 
-		#$db = new \klassen\PDO\Datenbank();
-		$db = new Datenbank();
-		$rezept = new Rezept();
 	}
 	protected function actionSmoothie_suchen()
 	{
@@ -181,7 +178,7 @@ class Seitensteuerung
 		if(isset($_SESSION["user_id"]))
 		{
 			
-			$this->content = "<h1>Bearbeitung</h1>";
+			$this->content = "<h1></h1>";
 
 			# Datenverarbeitung
 			#echo "<pre>";
@@ -241,7 +238,7 @@ class Seitensteuerung
 	
 	protected function actionLogin()
 	{
-		$this->content = "<h1>Login</h1>";
+		$this->content = "<h1></h1>";
 		// Teiltemplate
 		$this->content .= file_get_contents("templates/login_formular.html");		
 	}	

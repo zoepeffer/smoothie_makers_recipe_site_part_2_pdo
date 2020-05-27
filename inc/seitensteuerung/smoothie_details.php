@@ -17,7 +17,7 @@ use Klassen\Zutat;
 use Klassen\Datei;
 use Klassen\Dateimanager;
 
-$this->content = "<h1>Smoothie Details</h1>";
+$this->content = "<h1></h1>";
 
 $db = new Datenbank();
 
@@ -49,7 +49,7 @@ $front = $rezensioninfo[0]["front"]; // Das ist die Spalte mit 0 oder 1
 if($front == 1)
 {
 	$zeichenkette = suchen_und_ersetzen("__REZENSION__", 
-			"<div style='color:red'>Smoothie ist in Frontseite Der Rezension kann nicht mehr geändert werden!</div>"
+			"<div style='color:red'><h1>Smoothie ist in Frontseite Der Rezension kann nicht mehr geändert werden!</h1></div>"
 			,	$zeichenkette);
 }		
 else

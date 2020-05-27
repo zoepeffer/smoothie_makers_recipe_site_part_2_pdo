@@ -1,9 +1,37 @@
-<form action='' method='post' >
-    Loginname:<br /> 
-    <input type='text' name='login' /><br />
-    Passwort:<br /> 
-    <input type='password' name='passwort' /><br />
-    <input type='submit' name='login_formular' value='Login'/>
-    </form>
-    
-    <br /><br />
+
+        <!-- Contact Section-->
+        <section class="page-section" id="contact">
+            <div class="container">
+                <!-- Contact Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Log in</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-user-alt"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Contact Section Form-->
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
+                        <form action='' method='post' id="contactForm" name="sentMessage" novalidate="novalidate">
+                            <div class="control-group">
+                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                    <label>Nutzername</label><input  name='login' class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message=" Bitte geben Sie Ihren Nutzername ein." />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                    <label>Passwort</label><input  name='passwort' class="form-control" id="name" type="password" placeholder="Passwort" required="required" data-validation-required-message=" Bitte geben Sie Ihren Passwort ein." />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <br />
+                            <div id="success"></div>
+                            <div class="form-group"><button class="btn btn-primary btn-xl" id="sendMessageButton" type="submit"  name='login_formular' value='Login'>Anmelden</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
