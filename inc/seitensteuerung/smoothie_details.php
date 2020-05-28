@@ -1,10 +1,9 @@
 <?php
 namespace seitensteuerung;
 
-use Klassen\PDO\Datenbank;  // benutze diesen Namespace für Datenbank
-#use Klassen\MYSQLI\Datenbank; // benutze diesen Namespace für Datenbank
+use Klassen\PDO\Datenbank;  
+#use Klassen\MYSQLI\Datenbank; 
 
-// benutzte den Namensraum nur für die spezielle Klasse
 use Klassen\Bearbeitung;
 use Klassen\Farbe;
 use Klassen\Geschmack;

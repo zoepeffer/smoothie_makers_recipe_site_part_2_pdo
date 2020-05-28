@@ -1,10 +1,9 @@
 <?php
 namespace seitensteuerung;
 
-use Klassen\PDO\Datenbank;  // benutze diesen Namespace für Datenbank
-#use Klassen\MYSQLI\Datenbank; // benutze diesen Namespace für Datenbank
+use Klassen\PDO\Datenbank;  
+#use Klassen\MYSQLI\Datenbank; 
 
-// benutzte den Namensraum nur für die spezielle Klasse
 use Klassen\Bearbeitung;
 use Klassen\Farbe;
 use Klassen\Geschmack;
@@ -30,7 +29,7 @@ $zeichenkette = file_get_contents("templates/smoothie_details.html");
 $zeichenkette = suchen_und_ersetzen("__ZURUECK_LINK__", 
 '<a href="index.php?action=smoothie_bearbeiten">Zurück</a>', $zeichenkette);
 
-									// Suchstelle     	Ersatzinhalt		html-Grundgerüst
+									
 $zeichenkette = suchen_und_ersetzen("__HEADLINE__", 
 		$smoothie[0]["rezept_id"]." / ".
 		"User: ".$smoothie[0]["user_id"]." / ".

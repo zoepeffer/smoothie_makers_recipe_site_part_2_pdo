@@ -2,23 +2,17 @@
 namespace klassen\PDO;
 class Datenbank
 {
-	// Attribute
 	public $host="localhost";
 	public $port=3306;
 	public $dbname="_smoothie_maker";
 	public $user="root";
 	public $kennwort="";
-	public $db_objekt;	// PDO Objekt
+	public $db_objekt;	
 	
-	################################################################################################
-	// Magische Methoden
 	public function __construct()
 	{
-		$this->verbindung_herstellen();
-		#echo "<h1>PDO Datenbank</h1>";		
+		$this->verbindung_herstellen();	
 	}
-	################################################################################################
-	// Methoden
 	protected function verbindung_herstellen()
 	{
 		$this->db_objekt = new \PDO("mysql:host=".$this->host."; dbname=".$this->dbname.";port:".
@@ -35,8 +29,6 @@ class Datenbank
 	
 	public function abfrage_ausfuehren($sql, $array = array())
 	{
-		// Senden
-		#$antwort = $this->db_objekt->query($sql);
 		$antwort = $this->db_objekt->prepare($sql);
 		$antwort->execute($array);
 		return $antwort;
@@ -81,27 +73,4 @@ class Datenbank
 		}		
 	}	
 }
-
-####################################################################################################
-#$db = new Datenbank();
-
-#$insert_id = $db->sql_insert("insert into mitarbeiter (name, vorname) values('Mustermann','Max');");
-#$insert_id = $db->sql_insert("insert into mitarbeiter (name, vorname) values(?,?);", 
-#array("Fröhlich","Fritz"));
-#echo $insert_id;
-#echo "<hr />";
-#$insert_id = $db->sql_insert("insert into mitarbeiter (name, vorname) values(:nachname,:vorname);", 
-#array("nachname" => "Mustermann","vorname" => "Max"));
-#echo $insert_id;
-
-#echo "<hr />";
-#echo $db->sql_update("update mitarbeiter set vorname='Fritz'");
-
-#echo "<hr />";
-#echo "<pre>";
-#print_r($db->sql_select("select * from mitarbeiter"));
-#echo "</pre>";
-
-#echo "<hr />";
-#echo $db->sql_delete("delete from mitarbeiter");
 ?>

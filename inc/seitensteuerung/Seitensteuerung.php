@@ -1,10 +1,9 @@
 <?php
 namespace seitensteuerung;
 
-use Klassen\PDO\Datenbank;  // benutze diesen Namespace für Datenbank
-#use Klassen\MYSQLI\Datenbank; // benutze diesen Namespace für Datenbank
+use Klassen\PDO\Datenbank;  
+#use Klassen\MYSQLI\Datenbank; 
 
-// benutzte den Namensraum nur für die spezielle Klasse
 use Klassen\Bearbeitung;
 use Klassen\Farbe;
 use Klassen\Geschmack;
@@ -20,10 +19,10 @@ use Klassen\Dateimanager;
 class Seitensteuerung
 {
 	// Attribute
-	public $action 		= "";								// Seitenauswahl
-	public $formData 	= array();							// Formulardaten
-	public $template 	= "templates/grundgeruest.html";	// HTML-Seite
-	public $content 	= "Inhalt ist noch leer"; 			// Seiteninhalt der Unterseite
+	public $action 		= "";								
+	public $formData 	= array();							
+	public $template 	= "templates/grundgeruest.html";	
+	public $content 	= "Inhalt ist noch leer"; 			
 	
 	public function selectPage($page)
 	{
@@ -36,7 +35,7 @@ class Seitensteuerung
 											array("login" => $_POST['login']));
 			if(count($user) == 1)
 			{			
-				$hash = $user[0]["passwort"]; # $2y$10$L2SrVQ8Ll5lO.OvyBHBzYOXuzXwGoIBwrzTHuFwKzCUNAVNk47uXe
+				$hash = $user[0]["passwort"]; 
 				if(password_verify($_POST["passwort"], $hash))
 				{
 					$_SESSION["user_id"] = $user[0]["user_id"];
@@ -48,7 +47,6 @@ class Seitensteuerung
 		switch($this->action)
 		{
 			case "von_uns":				$this->actionVon_uns();					break;
-			case "smoothie_suchen":		$this->actionSmoothie_suchen();  	  	break;
 			case "smoothie_schreiben":	$this->actionSmoothie_schreiben();		break;
 			case "smoothie_bearbeiten":	$this->actionSmoothie_bearbeiten();		break;
 
@@ -91,46 +89,21 @@ class Seitensteuerung
 		include("von_uns.php");
 
 	}
-	protected function actionSmoothie_suchen()
-	{
-		$this->content = "<h1>Smoothie  Makers suchen</h1>";
-	}
-
-
-
-
 
 	protected function actionSmoothie_schreiben()
 	{
 		$this->content = "";
 		$this->formData = $_POST;
-		// Speichern der Daten in einer TXT-Datei
-		// Wenn das Formular verschickt wurde
 		if(isset($this->formData["smoothie_schreiben"]))
 		{
-			// Post Array umwandeln in eine serialisierte Version einer Zeichenkette
+			
 			$speicherbare_zeichenkette = serialize($this->formData);
-			// Dateiname generieren
-			$dateiname = uniqid("smoothierezepte_"); // smoothierezepte_5b28d75206bec
-			// Die Zeichenkette in die Datei schreiben
+			$dateiname = uniqid("smoothierezepte_"); 
 			file_put_contents("smoothierezepten/$dateiname.txt", $speicherbare_zeichenkette);
 			$this->content .= "Daten wurden gespeichert";
 
-			$db = new Datenbank(); 				# BEI use Klassen\PDO\Datenbank;
-			# $db = new \Klassen\PDO\Datenbank(); #	ohne use
-			
-/*			$dominierte_zutat_typ = $db->sql_select("select * from zutat where zutat_id =".$this->formData["option_zutat_typ"]);		
-			print_r($dominierte_zutat_typ);
-			
-			$smoothie_farbe = $db->sql_select("select * from farbe where farbe_id =".$this->formData["option_farbe"]);		
-			print_r($smoothie_farbe);
-			
-			$smoothie_selektion = $db->sql_select("select * from selektion where selektion_id =".$this->formData["option_selektion"]);		
-			print_r($smoothie_selektion);
+			$db = new Datenbank(); 				
 
-			$smoothie_geschmack = $db->sql_select("select * from geschmack where geschmack_id =".$this->formData["option_geschmack"]);		
-			print_r($smoothie_geschmack);
-*/
 			$datei = new Datei($_FILES["uploaddatei"]);
 			$dateimanager = new Dateimanager();
 			
@@ -169,7 +142,6 @@ class Seitensteuerung
 		}
 		else
 		{
-			// Teiltemplate
 			$this->content .= file_get_contents("templates/smoothie_schreiben_formular.html");
 		}
 	}
@@ -179,12 +151,7 @@ class Seitensteuerung
 		{
 			
 			$this->content = "<h1></h1>";
-
-			# Datenverarbeitung
-			#echo "<pre>";
-			#print_r($_POST);
-			#echo "</pre>";			
-			
+				
 			if(isset($_POST["rezension_id"]))
 			{
 				$teile = explode(";", $_POST["rezension_id"]);
@@ -231,7 +198,7 @@ class Seitensteuerung
 		}		
 		else
 		{
-			$this->actionLogin(); // Weiterleitung zum Login
+			$this->actionLogin(); 
 		}	
 	}
 	
@@ -267,7 +234,7 @@ class Seitensteuerung
 	protected function actionDownload()
 	{
 		$this->content = "<h1>Download</h1>";
-		header("Location: downloads/download.php"); // Weiterleitung
+		header("Location: downloads/download.php"); 
 	}	
 
 	protected function actionVeraltet()
@@ -279,7 +246,7 @@ class Seitensteuerung
 	protected function actionSeiteNichtGefunden()
 	{
 		$this->content = "<h1>Seite nicht gefunden</h1>";
-		header("HTTP/1.1 404 Not Found"); // Fehlerseite
+		header("HTTP/1.1 404 Not Found");
 	}		
 }
 ?>

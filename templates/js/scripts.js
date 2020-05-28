@@ -1,12 +1,8 @@
-/*!
-    * Start Bootstrap - Freelancer v6.0.1 (https://startbootstrap.com/themes/freelancer)
-    * Copyright 2013-2020 Start Bootstrap
-    * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-freelancer/blob/master/LICENSE)
-    */
+
     (function($) {
     "use strict"; // Start of use strict
   
-    // Smooth scrolling using jQuery easing
+    // Smooth scrolling
     $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
       if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
         var target = $(this.hash);
@@ -20,7 +16,7 @@
       }
     });
   
-    // Scroll to top button appear
+    // Scroll to top
     $(document).scroll(function() {
       var scrollDistance = $(this).scrollTop();
       if (scrollDistance > 100) {
@@ -30,7 +26,7 @@
       }
     });
   
-    // Closes responsive menu when a scroll trigger link is clicked
+    // Closes responsive menu 
     $('.js-scroll-trigger').click(function() {
       $('.navbar-collapse').collapse('hide');
     });
